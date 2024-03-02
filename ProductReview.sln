@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductReview.Domain", "Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductReview.Infrastruct", "ProductReview.Infrastruct\ProductReview.Infrastruct.csproj", "{17F1B1C6-EA3C-4418-8C8F-11588827A75F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductReview.Application", "ProductReview.Application\ProductReview.Application.csproj", "{C9CCDC75-9A3C-4C3E-90ED-60B7F70469C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{17F1B1C6-EA3C-4418-8C8F-11588827A75F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17F1B1C6-EA3C-4418-8C8F-11588827A75F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17F1B1C6-EA3C-4418-8C8F-11588827A75F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9CCDC75-9A3C-4C3E-90ED-60B7F70469C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9CCDC75-9A3C-4C3E-90ED-60B7F70469C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9CCDC75-9A3C-4C3E-90ED-60B7F70469C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9CCDC75-9A3C-4C3E-90ED-60B7F70469C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
