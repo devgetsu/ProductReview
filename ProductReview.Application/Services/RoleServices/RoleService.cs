@@ -14,63 +14,88 @@ namespace ProductReview.Application.Services.RoleServices
     public class RoleService : IRoleService
     {
         private readonly IRoleRepository _repos;
+        private readonly IRolePermissionRepos _reposPerRol;
 
-        public RoleService(IRoleRepository repos)
+        public RoleService(IRoleRepository repos, IRolePermissionRepos rePerRol)
         {
             _repos = repos;
+            _reposPerRol = rePerRol;
         }
 
-        public async Task<Role> CreateRole(CreateRoleDTO role)
+        public async Task<Role> CreateRole(CreateRoleDTO roleDTO)
         {
 
-            var x = _repos.Create(new Role { Name = role.Name }).Result;
+            var x = _repos.Create(new Role { Name = roleDTO.Name }).Result;
 
             foreach (var p in roleDTO.Permissions)
             {
-                _context.RolePermissions.Add(new RolePermission()
+                await _reposPerRol.Create(new RolePermission()
                 {
-                    RoleId = entry.Entity.Id,
+                    RoleId = x.Id,
                     PermissionId = p
                 });
-                await _context.SaveChangesAsync();
             }
 
-            return Ok(entry.Entity);
+            return x;
         }
 
-        public Task<bool> DeleteRoleById(int id)
+        public async Task<bool> DeleteRoleById(int id)
         {
-            throw new NotImplementedException();
+            var y = await _repos.Delete(x => x.Id == id);
+            return y;
         }
 
-        public Task<bool> DeleteRoleByName(int id)
+        public async Task<bool> DeleteRoleByName(string name)
         {
-            throw new NotImplementedException();
+            var s = await _repos.Delete(x => x.Name == name);
+            return s;
         }
 
-        public Task<IEnumerable<Role>> GetAllRoles()
+        public async Task<IEnumerable<Role>> GetAllRoles()
         {
-            throw new NotImplementedException();
+
+            var x = await _repos.GetAll();
+            return x;
         }
 
-        public Task<Role> GetRoleById(int id)
+        public async Task<Role> GetRoleById(int id)
         {
-            throw new NotImplementedException();
+            var s = await _repos.GetByAny(x => x.Id == id);
+            return s;
         }
 
-        public Task<Role> GetRoleByName(string name)
+        public async Task<Role> GetRoleByName(string name)
         {
-            throw new NotImplementedException();
+            var s = await _repos.GetByAny(x => x.Name == name);
+            return s;
         }
 
-        public Task<Role> UpdateRoleById(CreateRoleDTO role)
+        public async Task<Role> UpdateRoleById(int id, CreateRoleDTO roleDTO)
         {
-            throw new NotImplementedException();
+            var s = await _repos.GetByAny(x => x.Id == id);
+            if (s == null)
+            {
+                return new Role() { };
+            }
+            else
+            {
+                var res = await _repos.Update(new Role { Name = roleDTO.Name });
+                return res;
+            }
         }
 
-        public Task<Role> UpdateRoleByName(CreateRoleDTO role)
+        public async Task<Role> UpdateRoleByName(string name, CreateRoleDTO roleDTO)
         {
-            throw new NotImplementedException();
+            var s = await _repos.GetByAny(x => x.Name == name);
+            if (s == null)
+            {
+                return new Role() { };
+            }
+            else
+            {
+                var res = await _repos.Update(new Role { Name = roleDTO.Name });
+                return res;
+            }
         }
     }
 }
