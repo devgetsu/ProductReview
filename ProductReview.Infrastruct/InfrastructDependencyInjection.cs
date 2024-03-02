@@ -21,7 +21,7 @@ namespace ProductReview.Infrastruct
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IPermissionRepository, PermissionRepository>();
             services.AddScoped<IRolePermissionRepos, RolePermissionRepos>();
-
+            services.AddScoped<ICommentRepository, CommentRepository>();
             return services;
         }
     }
