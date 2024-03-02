@@ -20,7 +20,7 @@ namespace ProductReview.Application.Services.CommentServices
 
         public async Task<Comment> CreateRole(CommentDTO com)
         {
-            var s = await _comRepos.Create(new Comment() { Message = com.Message,ProductId = com.ProductId});
+            var s = await _comRepos.Create(new Comment() { Message = com.Message});
             return s;
         }
 
@@ -51,7 +51,7 @@ namespace ProductReview.Application.Services.CommentServices
             }
             else
             {
-                var res = await _comRepos.Update(new Comment { Message = com.Message, ProductId = com.ProductId});
+                var res = await _comRepos.Update(new Comment { Message = com.Message});
                 return res;
             }
         }
