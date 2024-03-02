@@ -35,9 +35,14 @@ namespace ProductReview.Infrastruct.Persistance
                .UsingEntity<RolePermission>();
 
             modelBuilder.Entity<Product>()
-                .HasOne(p => p.User)
-                .WithOne(u => u.Product)
-                .HasForeignKey<Product>(p => p.UserId);
+                .HasOne(p => p.User)  
+                .WithMany(u => u.Products)  
+                .HasForeignKey(p => p.UserId); 
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.Product)  
+                .WithMany(p => p.Comments) 
+                .HasForeignKey(c => c.ProductId); 
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
