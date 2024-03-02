@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProductReview.Domain.DTOs
 {
-    public class ProductDTO
+    public class UserDTO
     {
         public string Name { get; set; }
-        public string Description { get; set; }
-        public int UserId { get; set; }
-        public List<int> Comments { get; set; }
+        public string Email { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -9,5 +9,6 @@ namespace ProductReview.Domain.DTOs
     public class CommentDTO
     {
         public string Message { get; set; }
+        public int ProductId { get; set; }
     } 
 }
