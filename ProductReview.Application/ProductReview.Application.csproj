@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\PermissionServices\" />
     <Folder Include="Services\RoleServices\" />
     <Folder Include="Services\ProductServices\" />
     <Folder Include="Services\UserServices\" />
