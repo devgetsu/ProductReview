@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace ProductReview.Domain.Entities.Models
 {
-    public class Permission
+    public class Comment
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public List<Role> Roles { get; set; }
+        public string Message { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+
     }
 }
