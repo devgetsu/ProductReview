@@ -9,5 +9,6 @@ namespace ProductReview.Domain.DTOs
     public class CreatePermissionDTO
     {
         public string Name { get; set; }
+        public List<int> Roles {  get; set; }
     }
 }

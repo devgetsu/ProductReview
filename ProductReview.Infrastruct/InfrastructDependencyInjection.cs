@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProductReview.Application.Astractions.RepositoryInterfaces;
 using ProductReview.Infrastruct.Persistance;
+using ProductReview.Infrastruct.Repositories;
 
 namespace ProductReview.Infrastruct
 {
@@ -13,6 +15,11 @@ namespace ProductReview.Infrastruct
             {
                 ops.UseNpgsql(config.GetConnectionString("Postgress"));
             });
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
 
             return services;
         }
