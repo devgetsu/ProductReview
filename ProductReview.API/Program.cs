@@ -1,3 +1,4 @@
+using ProductReview.Application;
 using ProductReview.Infrastruct;
 namespace ProductReview.API
 {
@@ -11,6 +12,10 @@ namespace ProductReview.API
 
 
             builder.Services.AddInfraStruct(builder.Configuration);
+            builder.Services.AddAppServices();
+
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
