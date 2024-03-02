@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProductReview.Domain.DTOs
 {
-    public class RegisterDTO
+    public class UserDTO
     {
         public string Name { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public string ConiformPassword { get; set; }
-        public int Role { get; set; }
     }
 }

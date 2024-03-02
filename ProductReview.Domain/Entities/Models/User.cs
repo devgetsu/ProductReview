@@ -18,7 +18,6 @@ namespace ProductReview.Domain.Entities.Models
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
         public string PicturePath { get; set; }
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        public List<Product> Products { get; set; }
     }
 }
