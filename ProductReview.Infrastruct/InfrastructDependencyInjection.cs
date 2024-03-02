@@ -20,6 +20,7 @@ namespace ProductReview.Infrastruct
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IPermissionRepository, PermissionRepository>();
+            services.AddScoped<IRolePermissionRepos, RolePermissionRepos>();
 
             return services;
         }
