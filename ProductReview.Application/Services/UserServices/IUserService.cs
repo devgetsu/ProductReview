@@ -17,6 +17,7 @@ namespace ProductReview.Application.Services.UserServices
         public Task<bool> DeleteUserByName(string name);
         public Task<User> GetUserById(int id);
         public Task<User> GetUserByName(string name);
+        public Task<User> GetUserByLogin(string login);
         public Task<IEnumerable<User>> GetAllUsers();
     }
 }

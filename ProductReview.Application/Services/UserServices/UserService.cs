@@ -67,6 +67,11 @@ namespace ProductReview.Application.Services.UserServices
             return await _usRepo.GetByAny(x => x.Id == id);
         }
 
+        public async Task<User> GetUserByLogin(string login)
+        {
+            return await _usRepo.GetByAny(x => x.Login == login);
+        }
+
         public async Task<User> GetUserByName(string name)
         {
             return await _usRepo.GetByAny(x => x.Name == name);
