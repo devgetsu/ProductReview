@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductReview.Application.Services.AuthServices;
 using ProductReview.Application.Services.PasswordHasher;
@@ -33,6 +34,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
+        
         public async Task<string> Login(LoginDTO loginDTO)
         {
             var token = await _authService.GenerateToken(loginDTO);

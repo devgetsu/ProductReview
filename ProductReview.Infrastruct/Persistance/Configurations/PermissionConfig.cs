@@ -11,7 +11,23 @@ namespace ProductReview.Infrastruct.Persistance.Configurations
             builder.HasData(new Permission()
             {
                 Id = 1,
-                Name = "GetAllProduct"
+                Name = "GetAll"
+            });
+
+            builder.HasData(new Permission()
+            {
+                Id = 2,
+                Name = "UpdateUser"
+            });
+            builder.HasData(new Permission()
+            {
+                Id = 3,
+                Name = "DeleteUser"
+            });
+            builder.HasData(new Permission()
+            {
+                Id = 4,
+                Name = "CreateUser"
             });
         }
     }

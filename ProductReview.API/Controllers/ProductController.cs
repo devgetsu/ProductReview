@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProductReview.API.Filter;
 using ProductReview.Application.Services.ProductServices;
 using ProductReview.Domain.DTOs;
 
@@ -7,6 +9,7 @@ namespace ProductReview.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
 
@@ -18,6 +21,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "GetAll")]
         public async Task<IActionResult> GetAllProducts()
         {
             try
@@ -32,6 +36,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [PermissionFilter(permission: "CreateProduct")]
         public async Task<IActionResult> GetProductById(int id)
         {
             try

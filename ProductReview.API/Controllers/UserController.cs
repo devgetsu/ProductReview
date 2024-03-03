@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProductReview.API.Filter;
 using ProductReview.Application.Services.UserServices;
 using ProductReview.Domain.DTOs;
 
@@ -7,6 +9,7 @@ namespace ProductReview.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -17,6 +20,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet]
+        [PermissionFilter(permission: "GetAll")]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -48,6 +52,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
+        [PermissionFilter(permission:"CreateUser")]
         public async Task<IActionResult> CreateUser(UserDTO userDTO)
         {
             try
@@ -62,6 +67,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [PermissionFilter(permission:"UpdateUser")]
         public async Task<IActionResult> UpdateUserById(int id, UserDTO userDTO)
         {
             try
@@ -79,6 +85,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [PermissionFilter(permission:"DeleteUser")]
         public async Task<IActionResult> DeleteUserById(int id)
         {
             try
