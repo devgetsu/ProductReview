@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ProductReview.Application.Services.RoleServices
 {
@@ -25,18 +26,27 @@ namespace ProductReview.Application.Services.RoleServices
         public async Task<Role> CreateRole(CreateRoleDTO roleDTO)
         {
 
-            var x = _repos.Create(new Role { Name = roleDTO.Name }).Result;
+            var checker = await _repos.GetByAny(x => x.Name == roleDTO.Name);
 
-            foreach (var p in roleDTO.Permissions)
+            if (checker == null)
             {
-                await _reposPerRol.Create(new RolePermission()
-                {
-                    RoleId = x.Id,
-                    PermissionId = p
-                });
-            }
+                var x = _repos.Create(new Role { Name = roleDTO.Name }).Result;
 
-            return x;
+                foreach (var p in roleDTO.Permissions)
+                {
+                    await _reposPerRol.Create(new RolePermission()
+                    {
+                        RoleId = x.Id,
+                        PermissionId = p
+                    });
+                }
+
+                return x;
+            }
+            else
+            {
+                return new Role() { };
+            }
         }
 
         public async Task<bool> DeleteRoleById(int id)
@@ -79,8 +89,16 @@ namespace ProductReview.Application.Services.RoleServices
             }
             else
             {
-                var res = await _repos.Update(new Role { Name = roleDTO.Name });
-                return res;
+                if (s.Name != roleDTO.Name && !_repos.GetAll().Result.Any(x => x.Name == roleDTO.Name))
+                {
+                    s.Name = roleDTO.Name;
+                }
+                else
+                {
+                    return new Role() { Name = "Role is Already Exists" };
+                }
+                await _repos.Update(s);
+                return s;
             }
         }
 
@@ -89,11 +107,19 @@ namespace ProductReview.Application.Services.RoleServices
             var s = await _repos.GetByAny(x => x.Name == name);
             if (s == null)
             {
-                return new Role() { };
+                return new Role() { Name = "Role is not found" };
             }
             else
             {
-                var res = await _repos.Update(new Role { Name = roleDTO.Name });
+                if (s.Name != roleDTO.Name && !_repos.GetAll().Result.Any(x => x.Name == roleDTO.Name))
+                {
+                    s.Name = roleDTO.Name;
+                }
+                else
+                {
+                    return new Role() { Name = "Role is Already Exists" };
+                }
+                var res = await _repos.Update(s);
                 return res;
             }
         }
