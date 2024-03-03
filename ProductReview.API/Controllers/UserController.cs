@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProductReview.API.Filter;
+using ProductReview.API.Attributes;
+using ProductReview.API.ExternalServices;
 using ProductReview.Application.Services.UserServices;
 using ProductReview.Domain.DTOs;
+using ProductReview.Domain.Entities.Enums;
 
 namespace ProductReview.API.Controllers
 {
@@ -13,14 +15,16 @@ namespace ProductReview.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IWebHostEnvironment _env;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IWebHostEnvironment env)
         {
             _userService = userService;
+            _env = env;
         }
 
         [HttpGet]
-        [PermissionFilter(permission: "GetAll")]
+        [IdentityFilter(Permission.GetUser)]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -35,6 +39,8 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [IdentityFilter(Permission.GetUser)]
+
         public async Task<IActionResult> GetUserById(int id)
         {
             try
@@ -52,13 +58,19 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
-        [PermissionFilter(permission:"CreateUser")]
-        public async Task<IActionResult> CreateUser(UserDTO userDTO)
+        [IdentityFilter(Permission.CreateUser)]
+
+        public async Task<IActionResult> CreateUser([FromForm] UserDTO userDTO, IFormFile file)
         {
             try
             {
-                var user = await _userService.CreateUser(null, userDTO); // Assuming 'path' is not relevant for this endpoint
-                return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+                PictureExternalService service = new PictureExternalService(_env);
+
+                string picturePath = await service.AddPictureAndGetPath(file);
+
+                var result = await _userService.CreateUser(picturePath, userDTO);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -67,16 +79,18 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [PermissionFilter(permission:"UpdateUser")]
-        public async Task<IActionResult> UpdateUserById(int id, UserDTO userDTO)
+        [IdentityFilter(Permission.UpdateUser)]
+        public async Task<IActionResult> UpdateUserById([FromForm] int id, UserDTO userDTO, IFormFile file)
         {
             try
             {
-                var updatedUser = await _userService.UpdateUserById(id, userDTO);
-                if (updatedUser == null)
-                    return NotFound();
+                PictureExternalService service = new PictureExternalService(_env);
 
-                return Ok(updatedUser);
+                string picturePath = await service.AddPictureAndGetPath(file);
+
+                var result = await _userService.UpdateUserById(id, userDTO, picturePath);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -85,7 +99,8 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [PermissionFilter(permission:"DeleteUser")]
+        [IdentityFilter(Permission.DeleteUser)]
+
         public async Task<IActionResult> DeleteUserById(int id)
         {
             try

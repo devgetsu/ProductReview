@@ -19,4 +19,8 @@
     <ProjectReference Include="..\ProductReview.Infrastruct\ProductReview.Infrastruct.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

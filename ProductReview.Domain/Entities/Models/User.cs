@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProductReview.Domain.Entities.Enums;
 
 namespace ProductReview.Domain.Entities.Models
 {
@@ -17,6 +10,7 @@ namespace ProductReview.Domain.Entities.Models
         public string Login { get; set; }
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
+        public string Role { get; set; }
         public string PicturePath { get; set; }
         public List<Product> Products { get; set; }
     }

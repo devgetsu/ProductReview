@@ -17,11 +17,7 @@ namespace ProductReview.Infrastruct
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IPermissionRepository, PermissionRepository>();
-            services.AddScoped<IRolePermissionRepos, RolePermissionRepos>();
-            services.AddScoped<ICommentRepository, CommentRepository>();
             return services;
         }
     }

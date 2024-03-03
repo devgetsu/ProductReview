@@ -2,12 +2,6 @@
 using ProductReview.Application.Services.PasswordHasher;
 using ProductReview.Domain.DTOs;
 using ProductReview.Domain.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProductReview.Application.Services.UserServices
 {
@@ -27,7 +21,6 @@ namespace ProductReview.Application.Services.UserServices
             var checker = await _usRepo.GetByAny(x => x.Login == usDTO.Login || x.Email == usDTO.Email);
             if (checker == null)
             {
-
                 var salt = Guid.NewGuid().ToString();
                 var password = _psHasher.Encrypt(usDTO.Password, salt);
                 var res = await _usRepo.Create(new User()
@@ -38,6 +31,7 @@ namespace ProductReview.Application.Services.UserServices
                     PasswordHash = password,
                     Salt = salt,
                     PicturePath = path,
+                    Role = usDTO.Role,
                 });
                 return res;
             }
@@ -77,12 +71,12 @@ namespace ProductReview.Application.Services.UserServices
             return await _usRepo.GetByAny(x => x.Name == name);
         }
 
-        public async Task<User> UpdateUserById(int id, UserDTO usDTO)
+        public async Task<User> UpdateUserById(int id, UserDTO usDTO, string path)
         {
             var user = await _usRepo.GetByAny(x => x.Id == id);
             if (user == null)
             {
-                return new User() {Name = "User is not found"};
+                return new User() { Name = "User is not found" };
             }
             else
             {
@@ -111,12 +105,14 @@ namespace ProductReview.Application.Services.UserServices
                 user.Email = usDTO.Email;
                 user.Login = usDTO.Login;
                 user.PasswordHash = pass;
-                var res  = await _usRepo.Update(user);
+                user.PicturePath = path;
+                user.Role = usDTO.Role;
+                var res = await _usRepo.Update(user);
                 return res;
             }
         }
 
-        public async Task<User> UpdateUserByName(string name, UserDTO usDTO)
+        public async Task<User> UpdateUserByName(string name, UserDTO usDTO, string path)
         {
             var user = await _usRepo.GetByAny(x => x.Name == name);
 
@@ -144,10 +140,14 @@ namespace ProductReview.Application.Services.UserServices
                 return new User() { Login = "Login is blocked" };
             }
 
-            user.Name = usDTO.Name;
-
             var pass = _psHasher.Encrypt(usDTO.Password, user.Salt);
+
+            user.Name = usDTO.Name;
+            user.Email = usDTO.Email;
+            user.Login = usDTO.Login;
             user.PasswordHash = pass;
+            user.PicturePath = path;
+            user.Role = usDTO.Role;
 
             var updatedUser = await _usRepo.Update(user);
 

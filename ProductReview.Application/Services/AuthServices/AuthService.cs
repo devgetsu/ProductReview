@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ProductReview.Application.Services.AuthServices
@@ -38,11 +39,28 @@ namespace ProductReview.Application.Services.AuthServices
             if (await UserExist(user))
             {
                 var result = await _userService.GetUserByLogin(user.Login);
+                var permissions = new List<int>();
+
+                if (result.Role == "TeamLeader")
+                {
+                    permissions = new List<int>() { 1, 2, 5, 7 };
+                }
+                else if (result.Role == "User")
+                {
+                    permissions = new List<int>() { 8, 4 };
+                }
+                else if (result.Role == "Admin")
+                {
+                    permissions = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 };
+                }
+
+                var jsonContent = JsonSerializer.Serialize(permissions);
 
                 List<Claim> claims = new List<Claim>()
                 {
                     new Claim("Login", user.Login),
                     new Claim("UserID", result.Id.ToString()),
+                    new Claim("Permissions", jsonContent),
                     new Claim("CreatedDate", DateTime.UtcNow.ToString()),
                 };
 
@@ -83,12 +101,22 @@ namespace ProductReview.Application.Services.AuthServices
         public async Task<bool> UserExist(LoginDTO user)
         {
             var result = await _userService.GetUserByLogin(user.Login);
-
-            if (user.Login == result.Login && _passwordHasher.Verify(result.PasswordHash, user.Password, result.Salt))
+            try
             {
-                return true;
+
+                if (user.Login == result.Login && _passwordHasher.Verify(result.PasswordHash, user.Password, result.Salt))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
     }
 }

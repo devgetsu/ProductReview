@@ -10,7 +10,5 @@ namespace ProductReview.Domain.DTOs
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public int UserId { get; set; }
-        public List<int> Comments { get; set; }
     }
 }

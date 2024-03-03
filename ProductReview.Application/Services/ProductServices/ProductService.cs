@@ -24,7 +24,6 @@ namespace ProductReview.Application.Services.ProductServices
             {
                 Name = perDTO.Name,
                 Description = perDTO.Description,
-                UserId = perDTO.UserId
             });
             return s;
         }
@@ -65,7 +64,7 @@ namespace ProductReview.Application.Services.ProductServices
             }
             else
             {
-                var res = await _productRepo.Update(new Product { Name = perDTO.Name, Description = perDTO.Description,UserId = perDTO.UserId });
+                var res = await _productRepo.Update(new Product { Name = perDTO.Name, Description = perDTO.Description});
                 return res;
             }
         }
@@ -79,7 +78,7 @@ namespace ProductReview.Application.Services.ProductServices
             }
             else
             {
-                var res = await _productRepo.Update(new Product { Name = perDTO.Name, Description = perDTO.Description, UserId = perDTO.UserId });
+                var res = await _productRepo.Update(new Product { Name = perDTO.Name, Description = perDTO.Description});
                 return res;
             }
         }

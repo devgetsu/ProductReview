@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProductReview.API.Filter;
+using ProductReview.API.Attributes;
 using ProductReview.Application.Services.ProductServices;
 using ProductReview.Domain.DTOs;
+using ProductReview.Domain.Entities.Enums;
 
 namespace ProductReview.API.Controllers
 {
@@ -21,7 +22,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "GetAll")]
+        [IdentityFilter(Permission.GetProduct)]
         public async Task<IActionResult> GetAllProducts()
         {
             try
@@ -36,7 +37,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [PermissionFilter(permission: "CreateProduct")]
+        [IdentityFilter(Permission.GetProduct)]
         public async Task<IActionResult> GetProductById(int id)
         {
             try
@@ -54,6 +55,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
+        [IdentityFilter(Permission.CreateProduct)]
         public async Task<IActionResult> CreateProduct(ProductDTO productDTO)
         {
             try
@@ -68,6 +70,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [IdentityFilter(Permission.UpdateProduct)]
         public async Task<IActionResult> UpdateProductById(int id, ProductDTO productDTO)
         {
             try
@@ -85,6 +88,8 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [IdentityFilter(Permission.DeleteProduct)]
+
         public async Task<IActionResult> DeleteProductById(int id)
         {
             try
