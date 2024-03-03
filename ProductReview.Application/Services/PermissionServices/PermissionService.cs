@@ -20,6 +20,11 @@ namespace ProductReview.Application.Services.PermissionServices
 
         public async Task<Permission> CreatePermission(CreatePermissionDTO perDTO)
         {
+            var checker = await _repos.GetByAny(x => x.Name == perDTO.Name);
+            if (checker != null)
+            {
+                return new Permission() { Name = "Permission is already exists" };
+            }
             var x = await _repos.Create(new Permission { Name = perDTO.Name });
 
             return x;
@@ -60,11 +65,19 @@ namespace ProductReview.Application.Services.PermissionServices
             var s = await _repos.GetByAny(x => x.Id == id);
             if (s == null)
             {
-                return new Permission() { };
+                return new Permission() { Name = "Permission is not found" };
             }
             else
             {
-                var res = await _repos.Update(new Permission { Name = perDTO.Name });
+                if (s.Name != perDTO.Name && !_repos.GetAll().Result.Any(x => x.Name == perDTO.Name))
+                {
+                    s.Name = perDTO.Name;
+                }
+                else
+                {
+                    return new Permission() { Name = "Name is already exists" };
+                }
+                var res = await _repos.Update(s);
                 return res;
             }
         }
@@ -74,11 +87,19 @@ namespace ProductReview.Application.Services.PermissionServices
             var s = await _repos.GetByAny(x => x.Name == name);
             if (s == null)
             {
-                return new Permission() { };
+                return new Permission() { Name = "Permission is not foun" };
             }
             else
             {
-                var res = await _repos.Update(new Permission { Name = perDTO.Name });
+                if (s.Name != perDTO.Name && !_repos.GetAll().Result.Any(x => x.Name == perDTO.Name))
+                {
+                    s.Name = perDTO.Name;
+                }
+                else
+                {
+                    return new Permission() { Name = "Name is already exists" };
+                }
+                var res = await _repos.Update(s);
                 return res;
             }
         }

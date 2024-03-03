@@ -24,18 +24,27 @@ namespace ProductReview.Application.Services.UserServices
 
         public async Task<User> CreateUser(string path, UserDTO usDTO)
         {
-            var salt = Guid.NewGuid().ToString();
-            var password = _psHasher.Encrypt(usDTO.Password, salt);
-            var res = await _usRepo.Create(new User()
+            var checker = await _usRepo.GetByAny(x => x.Login == usDTO.Login || x.Email == usDTO.Email);
+            if (checker == null)
             {
-                Name = usDTO.Name,
-                Email = usDTO.Email,
-                Login = usDTO.Login,
-                PasswordHash = password,
-                Salt = salt,
-                PicturePath = path,
-            });
-            return res;
+
+                var salt = Guid.NewGuid().ToString();
+                var password = _psHasher.Encrypt(usDTO.Password, salt);
+                var res = await _usRepo.Create(new User()
+                {
+                    Name = usDTO.Name,
+                    Email = usDTO.Email,
+                    Login = usDTO.Login,
+                    PasswordHash = password,
+                    Salt = salt,
+                    PicturePath = path,
+                });
+                return res;
+            }
+            else
+            {
+                return new User() { };
+            }
         }
 
         public async Task<bool> DeleteUserById(int id)
@@ -65,43 +74,81 @@ namespace ProductReview.Application.Services.UserServices
 
         public async Task<User> UpdateUserById(int id, UserDTO usDTO)
         {
-            var s = await _usRepo.GetByAny(x => x.Id == id);
-            if (s == null)
+            var user = await _usRepo.GetByAny(x => x.Id == id);
+            if (user == null)
             {
-                return new User() { };
+                return new User() {Name = "User is not found"};
             }
             else
             {
-                var pass = _psHasher.Encrypt(usDTO.Password, s.Salt);
-                var res = await _usRepo.Update(new User {
-                    Name = usDTO.Name,
-                    Email = usDTO.Email,
-                    Login = usDTO.Login,
-                    PasswordHash = pass
-                });
+
+                if (usDTO.Email != user.Email && !_usRepo.GetAll().Result.Any(x => x.Email == usDTO.Email))
+                {
+                    user.Email = usDTO.Email;
+                }
+                else
+                {
+                    return new User() { Email = "Email is already exists" };
+                }
+
+
+                if (usDTO.Login != user.Login && !_usRepo.GetAll().Result.Any(x => x.Login == usDTO.Login))
+                {
+                    user.Login = usDTO.Login;
+                }
+                else
+                {
+                    return new User() { Login = "Login is blocked" };
+                }
+
+                var pass = _psHasher.Encrypt(usDTO.Password, user.Salt);
+                user.Name = usDTO.Name;
+                user.Email = usDTO.Email;
+                user.Login = usDTO.Login;
+                user.PasswordHash = pass;
+                var res  = await _usRepo.Update(user);
                 return res;
             }
         }
 
         public async Task<User> UpdateUserByName(string name, UserDTO usDTO)
         {
-            var s = await _usRepo.GetByAny(x => x.Name == name);
-            if (s == null)
+            var user = await _usRepo.GetByAny(x => x.Name == name);
+
+            if (user == null)
             {
-                return new User() { };
+                return new User() { Name = "User is not found" };
+            }
+
+            if (usDTO.Email != user.Email && !_usRepo.GetAll().Result.Any(x => x.Email == usDTO.Email))
+            {
+                user.Email = usDTO.Email;
             }
             else
             {
-                var pass = _psHasher.Encrypt(usDTO.Password, s.Salt);
-                var res = await _usRepo.Update(new User
-                {
-                    Name = usDTO.Name,
-                    Email = usDTO.Email,
-                    Login = usDTO.Login,
-                    PasswordHash = pass
-                });
-                return res;
+                return new User() { Email = "Email is already exists" };
             }
+
+
+            if (usDTO.Login != user.Login && !_usRepo.GetAll().Result.Any(x => x.Login == usDTO.Login))
+            {
+                user.Login = usDTO.Login;
+            }
+            else
+            {
+                return new User() { Login = "Login is blocked" };
+            }
+
+            user.Name = usDTO.Name;
+
+            var pass = _psHasher.Encrypt(usDTO.Password, user.Salt);
+            user.PasswordHash = pass;
+
+            var updatedUser = await _usRepo.Update(user);
+
+            return updatedUser;
         }
+
     }
 }
+
