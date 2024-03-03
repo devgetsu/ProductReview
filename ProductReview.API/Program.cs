@@ -12,12 +12,8 @@ namespace ProductReview.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-
             builder.Services.AddInfraStruct(builder.Configuration);
             builder.Services.AddAppServices();
-
 
 
             builder.Services.AddEndpointsApiExplorer();
@@ -45,7 +41,6 @@ namespace ProductReview.API
                 c.AddSecurityRequirement(securityRequirement);
             });
 
-
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                            .AddJwtBearer(
                                options =>
@@ -66,7 +61,6 @@ namespace ProductReview.API
                                });
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -79,13 +73,10 @@ namespace ProductReview.API
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
         }
-
-
         public static TokenValidationParameters GetTokenValidationParameters(IConfiguration configuration)
         {
             return new TokenValidationParameters()
