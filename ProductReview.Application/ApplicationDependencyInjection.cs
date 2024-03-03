@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ProductReview.Application.Astractions.RepositoryInterfaces;
+using ProductReview.Application.Services.AuthServices;
 using ProductReview.Application.Services.CommentServices;
 using ProductReview.Application.Services.PasswordHasher;
 using ProductReview.Application.Services.PermissionServices;
@@ -24,6 +25,7 @@ namespace ProductReview.Application
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IAuthService, AuthService>();
             return services;
         }
     }
