@@ -24,20 +24,20 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromForm] IFormFile picture, UserDTO userDTO)
+        public async Task<string> Register(UserDTO userDTO)
         {
 
             var entry = await _userService.CreateUser("path", userDTO);
 
-            return Ok("Yaratildi");
+            return "Yaratildi";
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginDTO loginDTO)
+        public async Task<string> Login(LoginDTO loginDTO)
         {
-            var token = _authService.GenerateToken(loginDTO);
+            var token = await _authService.GenerateToken(loginDTO);
 
-            return Ok(token);
+            return token;
         }
     }
 }
