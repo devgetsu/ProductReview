@@ -43,15 +43,15 @@ namespace ProductReview.Application.Services.AuthServices
 
                 if (result.Role == "TeamLeader")
                 {
-                    permissions = new List<int>() { 1, 2, 5, 7 };
+                    permissions = new List<int>() { 1, 2, 5, 7, 9, 10, 11, 12 };
                 }
                 else if (result.Role == "User")
                 {
-                    permissions = new List<int>() { 8, 4 };
+                    permissions = new List<int>() { 8, 4, 9, 10, 11, 12 };
                 }
                 else if (result.Role == "Admin")
                 {
-                    permissions = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 };
+                    permissions = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
                 }
 
                 var jsonContent = JsonSerializer.Serialize(permissions);

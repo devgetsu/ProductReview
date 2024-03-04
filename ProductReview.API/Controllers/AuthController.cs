@@ -25,7 +25,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
-        public async Task<string> Register(UserDTO userDTO)
+        public async Task<string> Register([FromForm] UserDTO userDTO)
         {
 
             var entry = await _userService.CreateUser("path", userDTO);
@@ -34,8 +34,8 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
-        
-        public async Task<string> Login(LoginDTO loginDTO)
+
+        public async Task<string> Login([FromForm] LoginDTO loginDTO)
         {
             var token = await _authService.GenerateToken(loginDTO);
 

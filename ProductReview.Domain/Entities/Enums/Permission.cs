@@ -15,6 +15,10 @@ namespace ProductReview.Domain.Entities.Enums
         CreateProduct,
         UpdateProduct,
         DeleteProduct,
-        GetProduct
+        GetProduct,
+        GetCommit,
+        AddCommit,
+        UpdateCommit,
+        DeleteCommit
     }
 }
