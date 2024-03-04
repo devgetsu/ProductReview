@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 namespace ProductReview.Application.Astractions.RepositoryInterfaces
 {
     public interface IProductRepository : IBaseRepository<Product>
-    { 
+    {
     }
 }

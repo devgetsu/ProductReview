@@ -94,7 +94,7 @@ namespace ProductReview.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(StatusCodes.Status501NotImplemented, ex.Message);
             }
         }
 
