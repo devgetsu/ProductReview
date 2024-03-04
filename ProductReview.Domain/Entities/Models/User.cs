@@ -1,5 +1,6 @@
 ﻿using ProductReview.Domain.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ProductReview.Domain.Entities.Models
 {
@@ -11,7 +12,11 @@ namespace ProductReview.Domain.Entities.Models
         [EmailAddress]
         public string Email { get; set; }
         public string Login { get; set; }
+
+        [JsonIgnore]
         public string PasswordHash { get; set; }
+
+        [JsonIgnore]
         public string Salt { get; set; }
         public string Role { get; set; }
         public string PicturePath { get; set; }

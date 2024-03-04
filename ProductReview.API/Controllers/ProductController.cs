@@ -56,7 +56,7 @@ namespace ProductReview.API.Controllers
 
         [HttpPost]
         [IdentityFilter(Permission.CreateProduct)]
-        public async Task<IActionResult> CreateProduct(ProductDTO productDTO)
+        public async Task<IActionResult> CreateProduct([FromForm] ProductDTO productDTO)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace ProductReview.API.Controllers
 
         [HttpPut("{id}")]
         [IdentityFilter(Permission.UpdateProduct)]
-        public async Task<IActionResult> UpdateProductById(int id, ProductDTO productDTO)
+        public async Task<IActionResult> UpdateProductById([FromForm] int id, ProductDTO productDTO)
         {
             try
             {
