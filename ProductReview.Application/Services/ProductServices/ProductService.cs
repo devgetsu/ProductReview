@@ -64,7 +64,9 @@ namespace ProductReview.Application.Services.ProductServices
             }
             else
             {
-                var res = await _productRepo.Update(new Product { Name = perDTO.Name, Description = perDTO.Description});
+                s.Name = perDTO.Name;
+                s.Description = perDTO.Description;
+                var res = await _productRepo.Update(s);
                 return res;
             }
         }
@@ -78,7 +80,9 @@ namespace ProductReview.Application.Services.ProductServices
             }
             else
             {
-                var res = await _productRepo.Update(new Product { Name = perDTO.Name, Description = perDTO.Description});
+                s.Name = perDTO.Name;
+                s.Description = perDTO.Description;
+                var res = await _productRepo.Update(s);
                 return res;
             }
         }

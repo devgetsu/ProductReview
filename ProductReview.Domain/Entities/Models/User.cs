@@ -1,4 +1,5 @@
 ﻿using ProductReview.Domain.Entities.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProductReview.Domain.Entities.Models
 {
@@ -6,6 +7,8 @@ namespace ProductReview.Domain.Entities.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        [EmailAddress]
         public string Email { get; set; }
         public string Login { get; set; }
         public string PasswordHash { get; set; }
