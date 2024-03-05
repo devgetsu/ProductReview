@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NewProductReview.Applicaion.Abstraction.RepositoryInterfaces;
+using NewProjectReview.Infrastructure.Repositories;
 using ProductReview.Application.Astractions.RepositoryInterfaces;
 using ProductReview.Infrastruct.Persistance;
 using ProductReview.Infrastruct.Repositories;
@@ -18,6 +20,7 @@ namespace ProductReview.Infrastruct
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
             return services;
         }
     }
