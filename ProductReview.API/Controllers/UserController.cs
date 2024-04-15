@@ -11,7 +11,7 @@ namespace ProductReview.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -24,7 +24,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet]
-        [IdentityFilter(Permission.GetUser)]
+        //[IdentityFilter(Permission.GetUser)]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -39,7 +39,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [IdentityFilter(Permission.GetUser)]
+        //[IdentityFilter(Permission.GetUser)]
 
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -58,7 +58,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
-        [IdentityFilter(Permission.CreateUser)]
+        //[IdentityFilter(Permission.CreateUser)]
 
         public async Task<IActionResult> CreateUser([FromForm] UserDTO userDTO, IFormFile file)
         {
@@ -79,7 +79,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [IdentityFilter(Permission.UpdateUser)]
+        //[IdentityFilter(Permission.UpdateUser)]
         public async Task<IActionResult> UpdateUserById([FromForm] int id, UserDTO userDTO, IFormFile file)
         {
             try
@@ -99,7 +99,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [IdentityFilter(Permission.DeleteUser)]
+        //[IdentityFilter(Permission.DeleteUser)]
 
         public async Task<IActionResult> DeleteUserById(int id)
         {

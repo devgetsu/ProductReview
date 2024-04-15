@@ -60,6 +60,13 @@ namespace ProductReview.API
                                    };
                                });
 
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                        policy.AllowAnyOrigin());
+            });
+
             builder.Services.AddAuthorization();
 
             // Add controllers services
@@ -72,6 +79,8 @@ namespace ProductReview.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors();
 
             app.UseHttpsRedirection();
 

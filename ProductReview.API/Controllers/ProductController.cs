@@ -10,7 +10,7 @@ namespace ProductReview.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductController : ControllerBase
     {
 
@@ -22,7 +22,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet]
-        [IdentityFilter(Permission.GetProduct)]
+        //[IdentityFilter(Permission.GetProduct)]
         public async Task<IActionResult> GetAllProducts()
         {
             try
@@ -37,7 +37,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [IdentityFilter(Permission.GetProduct)]
+        //[IdentityFilter(Permission.GetProduct)]
         public async Task<IActionResult> GetProductById(int id)
         {
             try
@@ -55,7 +55,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
-        [IdentityFilter(Permission.CreateProduct)]
+        //[IdentityFilter(Permission.CreateProduct)]
         public async Task<IActionResult> CreateProduct([FromForm] ProductDTO productDTO)
         {
             try
@@ -70,7 +70,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [IdentityFilter(Permission.UpdateProduct)]
+        //[IdentityFilter(Permission.UpdateProduct)]
         public async Task<IActionResult> UpdateProductById([FromForm] int id, ProductDTO productDTO)
         {
             try
@@ -88,7 +88,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [IdentityFilter(Permission.DeleteProduct)]
+        //[IdentityFilter(Permission.DeleteProduct)]
 
         public async Task<IActionResult> DeleteProductById(int id)
         {

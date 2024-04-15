@@ -14,7 +14,7 @@ namespace ProductReview.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CommentController : ControllerBase
     {
         private readonly ICommentService _commentService;
@@ -25,7 +25,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet]
-        [IdentityFilter(Permission.GetCommit)]
+        //[IdentityFilter(Permission.GetCommit)]
 
         public async Task<ActionResult<IEnumerable<Comment>>> GetAllComments()
         {
@@ -34,7 +34,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [IdentityFilter(Permission.GetCommit)]
+        //[IdentityFilter(Permission.GetCommit)]
         public async Task<ActionResult<Comment>> GetCommentById(int id)
         {
             var comment = await _commentService.GetCommentById(id);
@@ -46,7 +46,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPost]
-        [IdentityFilter(Permission.AddCommit)]
+        //[IdentityFilter(Permission.AddCommit)]
 
         public async Task<ActionResult<Comment>> CreateComment([FromForm] CommentDTO commentDTO)
         {
@@ -62,7 +62,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [IdentityFilter(Permission.UpdateCommit)]
+        //[IdentityFilter(Permission.UpdateCommit)]
 
         public async Task<ActionResult<Comment>> UpdateCommentById(int id, [FromForm] CommentDTO commentDTO)
         {
@@ -82,7 +82,7 @@ namespace ProductReview.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [IdentityFilter(Permission.DeleteCommit)]
+        //[IdentityFilter(Permission.DeleteCommit)]
         public async Task<IActionResult> DeleteCommentById(int id)
         {
             try
