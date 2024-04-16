@@ -56,7 +56,7 @@ namespace ProductReview.API.Controllers
 
         [HttpPost]
         //[IdentityFilter(Permission.CreateProduct)]
-        public async Task<IActionResult> CreateProduct([FromForm] ProductDTO productDTO)
+        public async Task<IActionResult> CreateProduct(ProductDTO productDTO)
         {
             try
             {
